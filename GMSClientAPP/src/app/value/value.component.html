@@ -1,0 +1,20 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <form #loginform="ngForm" autocomplete="off" (ngSubmit)="login()">
+        <div class="form-group">
+          <label>UserName</label>
+          <input type="text" class="form-control" name="username" [(ngModel)]="model.username" required>
+        </div>
+        <div class="formgroup">
+          <label>Password</label>
+          <input type="text" class="form-control" name="password" [(ngModel)]="model.password" required>
+        </div>
+        <br>
+        <button class="btn btn-success btn-block" type="submit">Login</button>
+      </form>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
