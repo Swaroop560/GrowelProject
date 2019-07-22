@@ -7,23 +7,20 @@ import { ValueComponent } from './value/value.component';
 import { AdminComponent } from './Admin/Admin.component';
 
 import { UserDashBoardComponent } from './user-dash-board/user-dash-board.component';
-import { NavigationComponent } from './navigation/navigation.component';
 import { HomeComponent } from './Home/Home.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { ProfileComponent } from './profile/profile.component';
 
 const appRoutes: Routes = [
    {
       path: 'home',
       component: HomeComponent
    },
-   {
-      path: 'nav',
-      component: NavigationComponent
-   },
     {
        path: 'admin',
        component: AdminComponent,
-       canActivate: [AuthGuard]
+       canActivate: [AuthGuard],
+
     },
     {
        path: 'value',
@@ -31,7 +28,13 @@ const appRoutes: Routes = [
     },
     {
        path: 'user',
-       component: UserDashBoardComponent
+       component: UserDashBoardComponent,
+       canActivate: [AuthGuard],
+       children: [
+         {
+              path: 'profile', component: ProfileComponent
+         }
+      ]
     },
     {
        path: '**',

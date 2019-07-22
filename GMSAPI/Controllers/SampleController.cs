@@ -14,7 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace GMSAPI.Controllers
 {
-    
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SampleController : ControllerBase
@@ -28,6 +28,8 @@ namespace GMSAPI.Controllers
 
         }
         public string[] days = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
+
+        [AllowAnonymous]
         [HttpGet("Days")]
         public IEnumerable<string> GetDays()
         {
@@ -38,6 +40,12 @@ namespace GMSAPI.Controllers
         {
             return await _repo.getAllEmps();
         }
+        [HttpGet("Emps/{id}")]
+        public async Task<EmployeeRoot> getEmpById(int id) 
+        {
+             return await _repo.GetEmployeeByID(id);
+        }
+        
         [HttpPost("registerdepartment")]
         public async Task<IActionResult> RegisterDepartment(DepartmentForRegisterDTO departmentForRegisterDTO)
         {
@@ -83,6 +91,7 @@ namespace GMSAPI.Controllers
 
         }
         
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(EmployeeForLoginDto employeeForLoginDto)
         {

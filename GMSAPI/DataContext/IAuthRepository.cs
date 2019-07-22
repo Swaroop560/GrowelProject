@@ -18,6 +18,8 @@ namespace GMSAPI.DataContext
          
          Task<IEnumerable<EmployeeRoot>> getAllEmps();
 
+         Task<EmployeeRoot> GetEmployeeByID(int Id);
+
     }
 }
 

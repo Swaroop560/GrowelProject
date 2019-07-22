@@ -10,11 +10,28 @@ import { AlertifyService } from '../_services/alertify.service';
 })
 export class AdminComponent implements OnInit {
 
-  loggedInUserName: string;
-  constructor(private authService: AuthService , private route: Router, private alertify: AlertifyService) { }
+  modelData: any = {};
+  userId: any;
+  imgUrl: any = 'bill.jpg';
+  constructor(public authService: AuthService , private route: Router, private alertify: AlertifyService) { }
 
   ngOnInit() {
-      this.loggedInUserName = this.authService.userName;
+    this.userId = this.authService.userId;
+    this.getUserInfo();
+  }
+  getUserInfo() {
+    this.authService.getEmployeeById(this.userId).subscribe(
+      next => {
+        console.log('The method get user info has started execution');
+        console.log(next);
+        this.modelData = next;
+        console.log('Model Data : ' + this.modelData);
+      },
+      error => {
+        this.alertify.error('Invalid Data Returned');
+        console.log('Invalid ID');
+      }
+    );
   }
   logout() {
     localStorage.removeItem('token');
@@ -23,6 +40,7 @@ export class AdminComponent implements OnInit {
     // this.model.password = '';
     // console.log('Logged Out Successfully');
     this.alertify.success('Logout Successful');
+    // this.authService.userName = '';
     // console.log('Logout Successful');
 
   }

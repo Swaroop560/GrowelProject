@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   constructor(public authService: AuthService, private alertify: AlertifyService, private routes: Router) { }
 
   ngOnInit() {
+    console.log('Execution Started');
   }
 
   login() {
@@ -26,9 +27,10 @@ export class HomeComponent implements OnInit {
         this.loginModel = false;
         if (res === 'ADMIN') {
           this.routes.navigate(['admin']);
-          console.log('2. User Role is :' + this.authService.userRole);
+          console.log(this.loggedIn());
+          // console.log('2. User Role is :' + this.authService.userRole);
           // this.isAdmin = true;
-          // this.alertify.success('Admin Logged in Successfully');
+          this.alertify.success('Admin Logged in Successfully');
         }
         if (res === 'USER') {
           this.routes.navigate(['user']);

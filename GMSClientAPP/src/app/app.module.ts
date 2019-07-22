@@ -17,6 +17,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { AlertifyService } from './_services/alertify.service';
 import { HomeComponent } from './Home/Home.component';
 import { AuthGuard} from './_guards/auth.guard';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
    declarations: [
@@ -25,7 +26,8 @@ import { AuthGuard} from './_guards/auth.guard';
       AdminComponent,
       UserDashBoardComponent,
       NavigationComponent,
-      HomeComponent
+      HomeComponent,
+      ProfileComponent
    ],
    imports: [
       BrowserModule,

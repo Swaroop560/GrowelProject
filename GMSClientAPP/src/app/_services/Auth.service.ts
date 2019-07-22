@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpHeaders , HttpResponse } from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import { Token } from '@angular/compiler/src/ml_parser/lexer';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +14,13 @@ export class AuthService {
 
     jwtHelper = new JwtHelperService();
 
+    rawToken: any;
+
     decodedToken: any;
 
     userRole: string;
+
+    userId: number;
 
     userName: string;
 
@@ -25,16 +31,22 @@ export class AuthService {
                           .pipe(
                             map((response: any) => {
                                 const user = response;
+                                console.log(user);
                                 if (user) {
+                                  console.log('token sent');
+                                  this.rawToken = user.token;
                                   localStorage.setItem('token', user.token);
                                   this.decodedToken = this.jwtHelper.decodeToken(user.token);
+                                  this.userId = this.decodedToken.nameid;
                                   console.log(this.decodedToken);
-                                  if (this.decodedToken.role) {
+                                  if (this.decodedToken.role === 'True') {
                                       this.userRole = 'ADMIN';
                                       console.log('User Has Admin Rights');
                                       return 'ADMIN';
-                                  } else {
+                                  }
+                                  if (this.decodedToken.role === 'False') {
                                       this.userRole = 'USER';
+                                      console.log('Login Status of User is : ' + this.loggedIn());
                                       console.log('User Has no Admin Rights');
                                       return 'USER';
                                   }
@@ -43,7 +55,14 @@ export class AuthService {
                           );
         }
         loggedIn() {
-          const token = localStorage.getItem('token');
-          return !this.jwtHelper.isTokenExpired(token);
+           const token = localStorage.getItem('token');
+           return !this.jwtHelper.isTokenExpired(token);
         }
+        getEmployeeById(id: number) {
+
+          const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
+
+          return this.http.get(this.baseUrl + 'Emps/' + id, { headers});
+        }
+
 }

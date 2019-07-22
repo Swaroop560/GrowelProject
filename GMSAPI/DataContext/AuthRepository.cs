@@ -99,6 +99,10 @@ namespace GMSAPI.DataContext
         {
             return await _context.EmployeeRoots.ToListAsync();
         }
+        public async Task<EmployeeRoot> GetEmployeeByID(int Id)
+        {
+            return await _context.EmployeeRoots.FirstOrDefaultAsync(x => x.Eid== Id);
+        }
     }
 }
 
