@@ -2,11 +2,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GMSAPI.Model
 {
-    public class Department
+    public class DepartmentInfo
     {
-        [Key]
-        public int DeptID { get; set; }
+        
+        public int Id { get; set; }
         public string DeptName { get; set; }
 
     }
 }
+

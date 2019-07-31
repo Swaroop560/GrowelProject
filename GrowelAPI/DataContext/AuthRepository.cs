@@ -1,7 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using GMSAPI.Model;
+using GrowelAPI.DataContext;
 using Microsoft.EntityFrameworkCore;
 
 namespace GMSAPI.DataContext
@@ -10,18 +9,18 @@ namespace GMSAPI.DataContext
     This Auth Repo is Responsible for interacting with the EF to fetch the Data.
      */
 
-    public class AuthRepository : IAuthRepository
+    public class AuthRepository 
     {
-        private readonly EmployeeContext _context;
-        public AuthRepository(EmployeeContext context)
+        private readonly EmployeeDataContext _context;
+        public AuthRepository(EmployeeDataContext context)
         {
             _context = context;
 
         }
        
-        public async Task<EmployeeRoot> Login(string username, string password)
+        public async Task<MasterEmployee> Login(string username, string password)
         {
-            var employee = await _context.EmployeeRoots.FirstOrDefaultAsync(x => x.UserName == username);
+            var employee = await _context.MasterEmployees.FirstOrDefaultAsync(x => x.UserName == username);
 
             if(employee == null)
                 return null;
@@ -46,19 +45,19 @@ namespace GMSAPI.DataContext
             
         }
 
-        public async Task<EmployeeRoot> Register(EmployeeRoot employeeroot, string password)
+        public async Task<MasterEmployee> Register(MasterEmployee masterEmployee, string password)
         {
 
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash , out passwordSalt);
 
-            employeeroot.PasswordHash=passwordHash;
-            employeeroot.PasswordSalt=passwordSalt;
+            masterEmployee.PasswordHash=passwordHash;
+            masterEmployee.PasswordSalt=passwordSalt;
 
-            await _context.EmployeeRoots.AddAsync(employeeroot);
+            await _context.MasterEmployees.AddAsync(masterEmployee);
             await _context.SaveChangesAsync();
 
-            return employeeroot;
+            return masterEmployee;
 
 
         }
@@ -74,35 +73,35 @@ namespace GMSAPI.DataContext
 
         public async Task<bool> UserExists(string username)
         {
-            if(await _context.EmployeeRoots.AnyAsync(x => x.UserName == username))
+            if(await _context.Logins.AnyAsync(x => x.Username == username))
                 return true;
             
             return false;
         }
 
-        public async Task<Department> AddDepartments(Department depts)
-        {
-             await _context.Departments.AddAsync(depts);
-             await _context.SaveChangesAsync();
+//         public async Task<Department> AddDepartments(Department depts)
+//         {
+//              await _context.Departments.AddAsync(depts);
+//              await _context.SaveChangesAsync();
 
-             return depts;
-        }
+//              return depts;
+//         }
 
-        public async Task<bool> DeptExists(string deptname)
-        {
-            if(await _context.Departments.AnyAsync(d => d.DeptName == deptname))
-                return true;
-            return false;
-        }
+//         public async Task<bool> DeptExists(string deptname)
+//         {
+//             if(await _context.Departments.AnyAsync(d => d.DeptName == deptname))
+//                 return true;
+//             return false;
+//         }
 
-        public async Task<IEnumerable<EmployeeRoot>> getAllEmps()
-        {
-            return await _context.EmployeeRoots.Include(d => d.Dept).ToListAsync();
-        }
-        public async Task<EmployeeRoot> GetEmployeeByID(int Id)
-        {
-            return await _context.EmployeeRoots.Include(d => d.Dept).FirstOrDefaultAsync(x => x.Eid== Id);
-        }
+//         public async Task<IEnumerable<EmployeeRoot>> getAllEmps()
+//         {
+//             return await _context.EmployeeRoots.Include(d => d.Dept).ToListAsync();
+//         }
+//         public async Task<EmployeeRoot> GetEmployeeByID(int Id)
+//         {
+//             return await _context.EmployeeRoots.Include(d => d.Dept).FirstOrDefaultAsync(x => x.Eid== Id);
+//         }
     }
 }
 

@@ -14,6 +14,8 @@ namespace GMSAPI.Model
         public string Email { get; set; }
         public bool IsAdmin { get; set; }
         public int deptID { get; set; }
+        
+        public string Image { get; set; }
         public string UserName { get; set; }
         public byte[]  PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }

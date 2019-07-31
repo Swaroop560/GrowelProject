@@ -12,7 +12,7 @@ export class AdminComponent implements OnInit {
 
   modelData: any = {};
   userId: any;
-  imgUrl: any = 'bill.jpg';
+  doj: any;
   constructor(public authService: AuthService , private route: Router, private alertify: AlertifyService) { }
 
   ngOnInit() {
@@ -25,6 +25,7 @@ export class AdminComponent implements OnInit {
         console.log('The method get user info has started execution');
         console.log(next);
         this.modelData = next;
+        this.doj = this.modelData.DoJ;
         console.log('Model Data : ' + this.modelData);
       },
       error => {

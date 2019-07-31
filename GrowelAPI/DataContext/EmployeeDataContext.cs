@@ -1,22 +1,16 @@
 using GMSAPI.Model;
+using GrowelAPI.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace GMSAPI.DataContext
+namespace GrowelAPI.DataContext
 {
-    public class EmployeeContext : DbContext
+    public class EmployeeDataContext : DbContext
     {
-        public EmployeeContext(DbContextOptions<EmployeeContext> options) : base(options)
+        public EmployeeDataContext(DbContextOptions<EmployeeDataContext> options): base(options)
         {
             
         }
-      
-        public DbSet<EmployeeRoot> EmployeeRoots { get; set; }
 
-        public DbSet<Department> Departments { get; set; }
-
-        public DbSet<MasterEmployee> MasterEmployees { get; set; }
-
-        
         public DbSet<DepartmentInfo> DepartmentInfos { get; set; }
 
         public DbSet<AadharDetail> AadharDetails { get; set; }
@@ -35,9 +29,10 @@ namespace GMSAPI.DataContext
 
         public DbSet<HeadQuatersDetail> HeadQuatersDetails { get; set; }
 
+        public DbSet<MasterEmployee> MasterEmployees { get; set; }
 
+        public DbSet<Login> Logins { get; set; }
         
 
     }
 }
-

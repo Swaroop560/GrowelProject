@@ -2,7 +2,7 @@
 
 namespace GMSAPI.Migrations
 {
-    public partial class EmployeeModelChanged : Migration
+    public partial class FirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

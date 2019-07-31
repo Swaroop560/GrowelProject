@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GMSAPI.DataContext;
+using GrowelAPI.DataContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,8 +41,8 @@ namespace GMSAPI
                                     (resolver as DefaultContractResolver).NamingStrategy= null;
                             });
             services.AddCors();
-            services.AddDbContext<EmployeeContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IAuthRepository ,AuthRepository>();// service is created per request. better than single-ton
+            services.AddDbContext<EmployeeDataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            // services.AddScoped<IAuthRepository ,AuthRepository>();// service is created per request. better than single-ton
             
             // interface IAuthRep is injected into the controllers and the implementation is cmng from 
             // AuthRepository.
